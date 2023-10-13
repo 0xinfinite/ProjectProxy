@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: ec669ff7fa68fb647860ced93332fa3f
+ShaderImporter:
+  externalObjects: {}
+  defaultTextures:
+  - _BaseMap: {instanceID: 0}
+  - _RadarDepthTex: {instanceID: 0}
+  - _MainTex: {instanceID: 0}
+  nonModifiableTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
