@@ -1,0 +1,827 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ArisaEye_R_Mask
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Body
+    m_Weight: 0
+  - m_Path: Cheek
+    m_Weight: 0
+  - m_Path: Face
+    m_Weight: 0
+  - m_Path: FaceForOutline
+    m_Weight: 0
+  - m_Path: Hair
+    m_Weight: 0
+  - m_Path: Hat
+    m_Weight: 0
+  - m_Path: Pevis
+    m_Weight: 0
+  - m_Path: Pevis/Hip_L
+    m_Weight: 0
+  - m_Path: Pevis/Hip_L/Hip_L_Tip
+    m_Weight: 0
+  - m_Path: Pevis/Hip_R
+    m_Weight: 0
+  - m_Path: Pevis/Hip_R/Hip_R_Tip
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint1
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint1/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint1/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint11
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint11/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint11/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint37
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint37/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint37/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint43
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint43/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint43/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint49
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint49/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint49/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint55
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint55/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint55/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint61
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint61/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint61/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint67
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint67/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint67/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint73
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint73/skirtJoint2
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint73/skirtJoint2/skirtJoint3
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint74
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint74/skirtJoint75
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint74/skirtJoint75/skirtJoint76
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint77
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint77/skirtJoint78
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint77/skirtJoint78/skirtJoint79
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint80
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint80/skirtJoint81
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint80/skirtJoint81/skirtJoint82
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint83
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint83/skirtJoint84
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint83/skirtJoint84/skirtJoint85
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint86
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint86/skirtJoint87
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint86/skirtJoint87/skirtJoint88
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint89
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint89/skirtJoint90
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint89/skirtJoint90/skirtJoint91
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint92
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint92/skirtJoint93
+    m_Weight: 0
+  - m_Path: Pevis/skirtJoint92/skirtJoint93/skirtJoint94
+    m_Weight: 0
+  - m_Path: Pevis/Spine1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Armpit_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Armpit_L/Armpit_L_tip
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Armpit_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Armpit_R/Armpit_R_tip
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Armpit_L_Aim
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Armpit_L_UpAim
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/ForearmTwist_1_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/ForearmTwist_2_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/ForearmTwist_3_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/ForearmTwist_4_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/ForearmTwist_Tip_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L/Pinky_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L/Pinky_L_1/Pinky_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L/Pinky_L_1/Pinky_L_2/Pinky_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L/Ring_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L/Ring_L_1/Ring_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Grip_L/Ring_L_1/Ring_L_2/Ring_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Index_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Index_L_1/Index_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Index_L_1/Index_L_2/Index_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Middle_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Middle_L_1/Middle_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Middle_L_1/Middle_L_2/Middle_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Sleeve_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Thumb_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Thumb_L_1/Thumb_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Forearm_L/Wrist_L/Thumb_L_1/Thumb_L_2/Thumb_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/Shoulder_L_Aim
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_1_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_2_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_3_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_4_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_Tip_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_Tip_L/Elbow_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_L/UpperArm_L/UpperArmTwist_Tip_L/Elbow_L_1/Elbow_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Armpit_R_Aim
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Armpit_R_UpAim
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/ForearmTwist_1_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/ForearmTwist_2_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/ForearmTwist_3_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/ForearmTwist_4_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/ForearmTwist_Tip_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R/Pinky_R_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R/Pinky_R_1/Pinky_R_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R/Pinky_R_1/Pinky_R_2/Pinky_R_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R/Ring_R_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R/Ring_R_1/Ring_R_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Grip_R/Ring_R_1/Ring_R_2/Ring_R_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Index_R_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Index_R_1/Index_R_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Index_R_1/Index_R_2/Index_R_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Middle_R_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Middle_R_1/Middle_R_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Middle_R_1/Middle_R_2/Middle_R_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Sleeve_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Thumb_R_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Thumb_R_1/Thumb_R_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Forearm_R/Wrist_R/Thumb_R_1/Thumb_R_2/Thumb_R_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/Shoulder_R_Aim
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_1_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_2_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_3_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_4_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_Tip_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_Tip_R/Elbow_R_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Clavicle_R/UpperArm_R/UpperArmTwist_Tip_R/Elbow_R_1/Elbow_R_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodEar_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodEar_L/HoodEar_L1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodEar_L/HoodEar_L1/HoodEar_L2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodEar_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodEar_R/HoodEar_R1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodEar_R/HoodEar_R1/HoodEar_R2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Hood/Hood1/Hood2/HoodNub
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Napkin
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Napkin/Napkin1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Napkin/Napkin1/Napkin2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_00
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_01
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_02
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_03
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_04
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_05
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_06
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_07
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_08
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_08/Eyelashes_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_09
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_09/Eyelashes_L_2_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_09/Eyelashes_L_2_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_10
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_10/Eyelashes_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_11
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_12
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_13
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_14
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_15
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_16
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eye_L_17
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/EyeBall_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/EyeBlow_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/EyeBlow_L1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/EyeBlow_L2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_5
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_6
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_7
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_8
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_L/Eyelid_L_9
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_00
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_01
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_02
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_03
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_04
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_05
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_06
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_07
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_08
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_08/Eyelashes_R_1
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_09
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_09/Eyelashes_R_2_1
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_09/Eyelashes_R_2_2
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_10
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_10/Eyelashes_R_3
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_11
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_12
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_13
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_14
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_15
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_16
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eye_R_17
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/EyeBall_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/EyeBlow_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/EyeBlow_R1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/EyeBlow_R2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_1
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_2
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_3
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_4
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_5
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_6
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_7
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_8
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Eye_R/Eyelid_R_9
+    m_Weight: 1
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair1_0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair1_0/Hair1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair1_0/Hair1/Hair1_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair1_0/Hair1/Hair1_1/Hair1_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair1_0/Hair1/Hair1_1/Hair1_2/Hair1_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair1_0/Hair1/Hair1_1/Hair1_2/Hair1_3/Hair1_4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_a
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_a/Hair2_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_a/Hair2_1/Hair2_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_a/Hair2_1/Hair2_2/Hair2_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_b
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_b/Hair2_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_b/Hair2_1/Hair2_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0/Hair2_b/Hair2_1/Hair2_2/Hair2_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0_Physics
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0_Physics/Hair2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0_Physics/Hair2/Hair2_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0_Physics/Hair2/Hair2_1/Hair2_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair2_0_Physics/Hair2/Hair2_1/Hair2_2/Hair2_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair3_0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair3_0/Hair3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair3_0/Hair3/Hair3_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair3_0/Hair3/Hair3_1/Hair3_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair3_0/Hair3/Hair3_1/Hair3_2/Hair3_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair3_0/Hair3/Hair3_1/Hair3_2/Hair3_3/Hair3_4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_2_Acc0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_2_Acc1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_2_Acc2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_3/Hair4_4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_3/Hair4_4/Hair4_5
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair4_0/Hair4/Hair4_1/Hair4_2/Hair4_3/Hair4_4/Hair4_5/Hair4_6
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair5_0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair5_0/Hair5
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair5_0/Hair5/Hair5_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair5_0/Hair5/Hair5_1/Hair5_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair6_0
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair6_0/Hair6
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair6_0/Hair6/Hair6_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair6_0/Hair6/Hair6_1/Hair6_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair6_0/Hair6/Hair6_1/Hair6_2/Hair6_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hair6_0/Hair6/Hair6_1/Hair6_2/Hair6_3/Hair6_4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/Hat2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/Hat2/Hat3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/HatRibbon
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/HatRibbon/HatRibbon_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/HatRibbon/HatRibbon_L/HatRibbon_L1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/HatRibbon/HatRibbon_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/Hat1/HatRibbon/HatRibbon_R/HatRibbon_R1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/HatFrilly_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/HatFrilly_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Hat/HatFrilly_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/HeadNub
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_Center_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_Center_D/Mouth_Center_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_Center_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_Center_U/Mouth_Center_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_01_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_01_D/Mouth_L_01_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_01_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_01_U/Mouth_L_01_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_02_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_02_D/Mouth_L_02_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_02_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_02_U/Mouth_L_02_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_03_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_03_D/Mouth_L_03_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_03_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_03_U/Mouth_L_03_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_L_03_U/Mouth_L_03_U3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_01_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_01_D/Mouth_R_01_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_01_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_01_U/Mouth_R_01_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_02_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_02_D/Mouth_R_02_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_02_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_02_U/Mouth_R_02_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_03_D
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_03_D/Mouth_R_03_D1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_03_U
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_03_U/Mouth_R_03_U1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Mouth/Mouth_R_03_U/Mouth_R_03_U3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Tongue
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Tooth
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Neck/Head/Tooth/Tooth_outside
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon1/NeckRibbon1_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon1/NeckRibbon1_1/NeckRibbon1_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon1/NeckRibbon1_1/NeckRibbon1_2/NeckRibbon1_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon2/NeckRibbon2_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon2/NeckRibbon2_1/NeckRibbon2_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon2/NeckRibbon2_1/NeckRibbon2_2/NeckRibbon2_3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon3
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon3/NeckRibbon3_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon3/NeckRibbon3_1/NeckRibbon3_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon4
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon4/NeckRibbon4_1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/NeckRibbonRoot/NeckRibbon4/NeckRibbon4_1/NeckRibbon4_2
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Shoulder_L
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Shoulder_L/Shoulder_L1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Shoulder_L/Shoulder_L1/Shoulder_L_tip
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Shoulder_R
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Shoulder_R/Shoulder_R1
+    m_Weight: 0
+  - m_Path: Pevis/Spine1/Spine2/Spine3/Shoulder_R/Shoulder_R1/Shoulder_R_tip
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/Calf_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/Calf_L/CalfTwist_1_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/Calf_L/CalfTwist_2_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/Calf_L/Foot_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/Calf_L/Foot_L/Toe_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/Calf_L/Foot_L/Toe_L/ToeNub_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/ThighTwist_1_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_L/ThighTwist_2_L
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/Calf_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/Calf_R/CalfTwist_1_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/Calf_R/CalfTwist_2_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/Calf_R/Foot_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/Calf_R/Foot_R/Toe_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/Calf_R/Foot_R/Toe_R/ToeNub_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/ThighTwist_1_R
+    m_Weight: 0
+  - m_Path: Pevis/Thigh_R/ThighTwist_2_R
+    m_Weight: 0
+  - m_Path: Usako
+    m_Weight: 0
+  - m_Path: UsakoPevis
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_1
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_1/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_1/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_1/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_2
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_2/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_2/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_2/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_3
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_3/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_3/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_3/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_4
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_4/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_4/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_4/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_5
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_5/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_5/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_5/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_6
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_6/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_6/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_6/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_7
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_7/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_7/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_7/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_8
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_8/Skirt_b
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_8/Skirt_b/Skirt_c
+    m_Weight: 0
+  - m_Path: UsakoPevis/Skirt_a_8/Skirt_b/Skirt_c/Skirt_d
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoClavicle_L
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoClavicle_L/Arm_L
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoClavicle_L/Arm_L/Arm_L1
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoClavicle_R
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoClavicle_R/Arm_R
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoClavicle_R/Arm_R/Arm_R1
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead/Ear_L
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead/Ear_L/Ear_L1
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead/Ear_L/Ear_L1/Ear_L2
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead/Ear_R
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead/Ear_R/Ear_R1
+    m_Weight: 0
+  - m_Path: UsakoPevis/UsakoSpine/UsakoSpine2/UsakoHead/Ear_R/Ear_R1/Ear_R2
+    m_Weight: 0
