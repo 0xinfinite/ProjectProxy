@@ -171,6 +171,10 @@ Shader "Universal Render Pipeline/Stylish Lit"
             #pragma multi_compile_fog
             #pragma multi_compile_fragment _ DEBUG_DISPLAY
 
+            //-------------------------------------
+            //  custom global keyword
+            #pragma multi_compile _ MAIN_CHARACTER_SHADOW_ON
+
             //--------------------------------------
             // GPU Instancing
             #pragma multi_compile_instancing

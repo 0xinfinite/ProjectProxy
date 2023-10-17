@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class CustomSkinnedMeshRenderer : MonoBehaviour
 {
@@ -6,6 +7,7 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
     public Transform rootBone;
     public Transform[] bones;
     public BoneWeight[] weights;
+    
     [Range(0,1)]
     public float[] blendshapeWeights;
     public bool syncShapeValueWithSkinned = true;
@@ -81,7 +83,7 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
         return arr;
     }
 
-    private Vector3 DeformVertex(Vector3 vertex, BoneWeight boneWeight, int weightNum)
+    private Vector3 DeformVertex(Vector3 vertex, BoneWeight boneWeight, int weightNum)  //Deprecated : limited by 4 bones
     {
 
         float weight = boneWeight.weight0;
@@ -116,7 +118,24 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
         return boneVertex * weight;
 
     }
-    private Vector3 DeformNormal(Vector3 normal, BoneWeight boneWeight, int weightNum)
+
+    private Vector3 DeformVertex(Vector3 vertex, BoneWeight1 boneWeight)
+    {
+
+        float weight = boneWeight.weight;
+
+        if (weight <= 0) return Vector3.zero;
+
+        Transform bone = bones[boneWeight.boneIndex];
+        
+
+        Matrix4x4 boneMatrix = bone.localToWorldMatrix * bindposes[boneWeight.boneIndex];
+        Vector3 boneVertex = boneMatrix.MultiplyPoint3x4(vertex);
+        return boneVertex * weight;
+
+    }
+
+    private Vector3 DeformNormal(Vector3 normal, BoneWeight boneWeight, int weightNum)  //Deprecated : limited by 4 bones
     {
 
         float weight = boneWeight.weight0;
@@ -151,11 +170,30 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
         return boneNormal * weight;
 
     }
+
+    private Vector3 DeformNormal(Vector3 normal, BoneWeight1 boneWeight)
+    {
+
+        float weight = boneWeight.weight;
+
+        if (weight <= 0) return Vector3.zero;
+
+        Transform bone = bones[boneWeight.boneIndex];
+
+
+        Matrix4x4 boneMatrix = bone.localToWorldMatrix * bindposes[boneWeight.boneIndex];
+        Vector3 boneNormal = boneMatrix.MultiplyVector(normal);
+        return boneNormal * weight;
+    }
+
     void LateUpdate()
     {
 
                 if (mesh == null || bones == null || weights == null)
             return;
+
+        var bonesPerVertex = mesh.GetBonesPerVertex();
+        var boneWeights = mesh.GetAllBoneWeights();
 
         Vector3[] vertices = mesh.vertices;
         Vector3[] deltaVertices = new Vector3[vertices.Length];
@@ -178,22 +216,32 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
                 //normals[j] += deltaNormals[j] * weight;
             }
         }
-
+        int boneWeightIndex = 0;
         for (int i = 0; i < vertices.Length; i++)
         {
             Vector3 deformedVertex = Vector3.zero;
             Vector3 deformedNormal = Vector3.zero;
 
+            var numberOfBonesForThisVertex = bonesPerVertex[i];
 
-            deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 0);
-            deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 1);
-            deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 2);
-            deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 3);
+            for(int j = 0; j < numberOfBonesForThisVertex; j++)
+            {
+                deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], boneWeights[boneWeightIndex]);
+                deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, boneWeights[boneWeightIndex]);
 
-            deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 0);
-            deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 1);
-            deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 2);
-            deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 3);
+                boneWeightIndex++;
+            }
+
+
+            //deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 0);
+            //deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 1);
+            //deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 2);
+            //deformedVertex += DeformVertex(vertices[i] + deltaVertices[i], weights[i], 3);
+
+            //deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 0);
+            //deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 1);
+            //deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 2);
+            //deformedNormal += DeformNormal(normals[i]/* + deltaNormals[i]*/, weights[i], 3);  //deprecated deform
 
             vertices[i] = transform.InverseTransformPoint(deformedVertex);
             normals[i] = //deformedNormal.normalized;//

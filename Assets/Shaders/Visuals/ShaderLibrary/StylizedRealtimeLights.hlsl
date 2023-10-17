@@ -116,23 +116,61 @@
 //    return light;
 //}
 
-Light GetMainLight(float4 shadowCoord, float shadowCastOffset)
-{
-    Light light = GetMainLight();
 
-    shadowCoord.z += shadowCastOffset;
-    
-    light.shadowAttenuation = MainLightRealtimeShadow(shadowCoord);
-    return light;
+
+//Light GetMainLight(float shadowCastOffset)
+//{
+//    Light light = GetMainLight();
+//
+//    //shadowCoord.z += shadowCastOffset;
+//    
+//    light.shadowAttenuation = MainLightRealtimeShadow(shadowCoord);
+//    return light;
+//}
+
+#include "../ShaderLibrary/Projection.hlsl"
+
+TEXTURE2D(_MainCharacterShadowmap);
+SAMPLER(sampler_MainCharacterShadowmap);
+float4x4 _MainCharacterMatrix;
+
+
+float3 MainCharacterLightShadow(float3 positionWS) {
+
+    float4 projUV = ProjectUVFromWorldPos(_MainCharacterMatrix, positionWS);
+    float2 uv = ProjectionUVToTex2DUV(projUV);
+
+    if (ClipUVBoarder(uv)) {
+        return -1;
+    }
+    if (ClipBackProjection(projUV)) {
+        return -1;
+    }
+
+    float dfp = DepthFromProjection(projUV);
+    float dfd = DepthFromDepthmap(_MainCharacterShadowmap, sampler_MainCharacterShadowmap, projUV, 1);
+
+    return float3(uv.x, uv.y ,1 - ClipProjectionShadow(dfp, dfd, -0.0001));
 }
 
-Light GetMainLight(float4 shadowCoord, float3 positionWS, half4 shadowMask, float shadowCastOffset)
+Light GetMainLight(float3 positionWS, half4 shadowMask, float shadowCastOffset)
 {
     Light light = GetMainLight();
 
-    shadowCoord.z += shadowCastOffset;
+    float3 virtualWorldPos = positionWS + (light.direction * shadowCastOffset);
+
+    float4 shadowCoord = TransformWorldToShadowCoord(virtualWorldPos);
 
     light.shadowAttenuation = MainLightShadow(shadowCoord, positionWS, shadowMask, _MainLightOcclusionProbes);
+
+#if defined(MAIN_CHARACTER_SHADOW_ON)
+    float3 detailShadow = MainCharacterLightShadow(virtualWorldPos);
+    if (detailShadow.z > -0.1) {
+
+        light.shadowAttenuation = min(light.shadowAttenuation, detailShadow.z);
+      
+    }
+#endif
 
     #if defined(_LIGHT_COOKIES)
         real3 cookieColor = SampleMainLightCookie(positionWS);
@@ -144,7 +182,7 @@ Light GetMainLight(float4 shadowCoord, float3 positionWS, half4 shadowMask, floa
 
 Light GetMainLight(InputData inputData, half4 shadowMask, AmbientOcclusionFactor aoFactor, float shadowCastOffset)
 {
-    Light light = GetMainLight(inputData.shadowCoord, inputData.positionWS, shadowMask, shadowCastOffset);
+    Light light = GetMainLight(inputData.positionWS, shadowMask, shadowCastOffset);
 
     #if defined(_SCREEN_SPACE_OCCLUSION) && !defined(_SURFACE_TYPE_TRANSPARENT)
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_AMBIENT_OCCLUSION))

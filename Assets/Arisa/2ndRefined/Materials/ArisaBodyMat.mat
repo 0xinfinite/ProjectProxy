@@ -108,7 +108,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AdditionalShadowCastOffset: 0.06
+    - _AdditionalShadowCastOffset: 0
     - _AlphaClip: 1
     - _AlphaToMask: 1
     - _BaseMultiplier: 1
@@ -134,7 +134,7 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _ShadowCastOffset: 0.03
+    - _ShadowCastOffset: 0
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1

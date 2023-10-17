@@ -22,14 +22,18 @@
 				float4 projVertex = mul(worldToHClipMatrix, mul(unity_ObjectToWorld, inputVertex));
 
 				#if UNITY_REVERSED_Z
-				projVertex.z = 1-projVertex;
+				projVertex.z = 1-projVertex.z;
 				#endif
 				
 				return ComputeScreenPos(projVertex);
 			}
 
 			float4 ProjectUVFromWorldPos(float4x4 projection, float3 worldPos) {
-				float4 projVertex = mul(projection, float4(worldPos, 1) );
+				float4 projVertex = mul(projection, float4(worldPos.x,worldPos.y, worldPos.z, 1) );
+//				
+//#if UNITY_REVERSED_Z
+//				projVertex.z = 1-projVertex.z;
+//				#endif
 
 				return ComputeScreenPos(projVertex);
 				//float3 os = TransformWorldToObject(worldPos);
@@ -65,6 +69,9 @@
 			}
 
 			float DepthFromProjection(float4 projUV) {
+//#if UNITY_REVERSED_Z
+//				return projUV.z / projUV.w;
+//#endif
 				return 1 - projUV.z / projUV.w;
 			}
 
