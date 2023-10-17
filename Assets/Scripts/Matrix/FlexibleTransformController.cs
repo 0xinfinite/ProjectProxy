@@ -1,9 +1,175 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
-using System.Drawing.Drawing2D;
-using UnityEngine.UIElements;
 
+[System.Serializable]
+public class FlexibleTransform
+{
+    public Transform transform;
+    public Vector3 position;
+    public Quaternion rotation;
+    public Vector3 scale;
+
+    public FlexibleTransform(Transform tf, Transform parent)
+    {
+        transform = tf;
+        Vector3 p;
+        Quaternion r;
+        scale = GetWorldToLocalTransform(parent, tf, out p, out r);
+        position = p;
+        rotation = r;
+    }
+
+
+    public FlexibleTransform(Transform tf, Matrix4x4 mat)
+    {
+        transform = tf;
+        //Vector3 p;
+        //Quaternion r;
+        scale = MatrixConversion.ScaleFromMatrix(mat);//GetWorldToLocalTransform(parent, tf, out p, out r);
+        position = MatrixConversion.PositionFromMatrix(mat);
+        rotation = MatrixConversion.RotationFromMatrix(mat);
+    }
+
+    public FlexibleTransform(Matrix4x4 parentMat, Transform tf)
+    {
+        Matrix4x4 m = MatrixConversion.GetLocalMatrix(parentMat, tf.position, tf.rotation, tf.lossyScale);
+        
+        transform = tf;
+        position = MatrixConversion.PositionFromMatrix(m);
+        rotation = MatrixConversion.RotationFromMatrix(m);
+        scale = MatrixConversion.ScaleFromMatrix(m);
+    }
+
+    public Vector3 GetWorldToLocalTransform(Transform p_parent, Transform childTransform, out Vector3 position, out Quaternion rotation)
+    {
+        Matrix4x4 parentMatrix = Matrix4x4.TRS(p_parent.position, p_parent.rotation, p_parent.lossyScale);
+
+        Matrix4x4 m = MatrixConversion.GetLocalMatrix(parentMatrix, childTransform.position, childTransform.rotation, childTransform.lossyScale);
+
+        position = MatrixConversion.PositionFromMatrix(m);
+        rotation = MatrixConversion.RotationFromMatrix(m);
+        return MatrixConversion.ScaleFromMatrix(m);
+    }
+
+    
+
+    public void SyncTransform(Matrix4x4 parentMat)
+    {
+        Matrix4x4 m = MatrixConversion.GetWorldMatrix(parentMat, position, rotation, scale);
+
+        transform.position = MatrixConversion.PositionFromMatrix(m);
+        transform.rotation = MatrixConversion.RotationFromMatrix(m);
+        //transform.localScale = MatrixConversion.PositionFromMatrix(m);
+    }
+}
+
+public static class MatrixConversion
+{
+    public static Matrix4x4 GetProjectionMatrix(Camera cam)
+    {
+        return (!cam.orthographic? 
+            cam.projectionMatrix :
+            GL.GetGPUProjectionMatrix(cam.projectionMatrix,false))* cam.worldToCameraMatrix;
+    }
+
+    public static Matrix4x4 GetVP(Camera cam)
+    {
+        bool d3d = SystemInfo.graphicsDeviceVersion.IndexOf("Direct3D") > -1;
+        //Matrix4x4 M = _target.localToWorldMatrix;
+        Matrix4x4 V = cam.worldToCameraMatrix;
+        Matrix4x4 P = cam.projectionMatrix;
+        if (d3d) {
+            // Invert Y for rendering to a render texture
+            for (int i = 0; i < 4; i++) {
+                P[1,i] = -P[1,i];
+            }
+            // Scale and bias from OpenGL -> D3D depth range
+            for (int i = 0; i < 4; i++) {
+                P[2,i] = P[2,i]*0.5f + P[3,i]*0.5f;
+            }
+        }
+        //Matrix4x4 MVP = P*V*M;
+
+        //Matrix4x4 matrix_MVP = P * V * M;//_camera.worldToCameraMatrix;
+        return P * V;
+    }
+    
+    public static Vector3 PositionFromMatrix(Matrix4x4 m) { return m.GetColumn(3); }
+    public static void SetPositionFromMatrix(ref Matrix4x4 m, Vector3 pos) {
+        // m.SetColumn(3, new Vector4(pos.x,pos.y,pos.z, 0)); 
+        //m.m03 = pos.x;
+        //m.m13 = pos.y;
+        //m.m23 = pos.z;
+        m.SetTRS(pos, MatrixConversion.RotationFromMatrix(m), MatrixConversion.ScaleFromMatrix(m));
+    }
+
+    // Extract new local rotation
+    public static Quaternion RotationFromMatrix(Matrix4x4 m)
+    {
+        return Quaternion.LookRotation(
+            m.GetColumn(2),
+            m.GetColumn(1)
+            );
+    }
+
+    public static void SetRotationToMatrix(ref Matrix4x4 m, Quaternion rot)
+    {
+        m.SetColumn(2, rot * Vector3.forward);
+        m.SetColumn(1, rot * Vector3.up);
+
+        //return m;
+    }
+
+    // Extract new local scale
+    public static Vector3 ScaleFromMatrix(Matrix4x4 m)
+    {
+        return new Vector3(
+            m.GetColumn(0).magnitude,
+            m.GetColumn(1).magnitude,
+            m.GetColumn(2).magnitude);
+    }
+
+    public static Matrix4x4 GetLocalMatrix(Matrix4x4 parentMatrix, Vector3 worldPosition, Quaternion worldRotation, Vector3 lossyScale)
+    {
+        Matrix4x4 childMatrix = Matrix4x4.TRS(worldPosition, worldRotation, lossyScale);
+        return parentMatrix.inverse * childMatrix;
+    }
+
+    public static Matrix4x4 GetLocalMatrixAndConvert(Matrix4x4 parentMatrix, Matrix4x4 childMatrix)
+    {
+        return parentMatrix.inverse * childMatrix;
+    }
+
+    public static Matrix4x4 GetWorldMatrix(Matrix4x4 parentMatrix, Vector3 localPosition, Quaternion localRotation, Vector3 localScale)
+    {
+        Matrix4x4 childMatrix = Matrix4x4.TRS(localPosition, localRotation, localScale);
+        return parentMatrix * childMatrix;
+    }
+
+    public static Matrix4x4 GetWorldMatrixAndConvert(Matrix4x4 parentMatrix, Matrix4x4 childMatrix)
+    {
+        return parentMatrix * childMatrix;
+    }
+
+    public static Vector3 TransformVector(Matrix4x4 parentMatrix, Vector3 localVector)
+    {
+        return parentMatrix.MultiplyVector(localVector);
+    }
+
+    public static Vector3 InverseTransformVector(Matrix4x4 parentMatrix, Vector3 worldVector)
+    {
+        return parentMatrix.inverse.MultiplyVector(worldVector);
+    }
+    public static Vector3 TransformPoint(Matrix4x4 parentMatrix, Vector3 localPoint)
+    {
+        return parentMatrix.MultiplyPoint(localPoint);
+    }
+
+    public static Vector3 InverseTransformPoint(Matrix4x4 parentMatrix, Vector3 worldPoint)
+    {
+        return parentMatrix.inverse.MultiplyPoint(worldPoint);
+    }
+}
 public class FlexibleTransformController : MonoBehaviour
 {
     public Vector3 virtualAxisPosition;
@@ -325,175 +491,5 @@ public class FlexibleTransformParent
         }
 
         InputTransform();
-    }
-}
-
-[System.Serializable]
-public class FlexibleTransform
-{
-    public Transform transform;
-    public Vector3 position;
-    public Quaternion rotation;
-    public Vector3 scale;
-
-    public FlexibleTransform(Transform tf, Transform parent)
-    {
-        transform = tf;
-        Vector3 p;
-        Quaternion r;
-        scale = GetWorldToLocalTransform(parent, tf, out p, out r);
-        position = p;
-        rotation = r;
-    }
-
-
-    public FlexibleTransform(Transform tf, Matrix4x4 mat)
-    {
-        transform = tf;
-        //Vector3 p;
-        //Quaternion r;
-        scale = MatrixConversion.ScaleFromMatrix(mat);//GetWorldToLocalTransform(parent, tf, out p, out r);
-        position = MatrixConversion.PositionFromMatrix(mat);
-        rotation = MatrixConversion.RotationFromMatrix(mat);
-    }
-
-    public FlexibleTransform(Matrix4x4 parentMat, Transform tf)
-    {
-        Matrix4x4 m = MatrixConversion.GetLocalMatrix(parentMat, tf.position, tf.rotation, tf.lossyScale);
-        
-        transform = tf;
-        position = MatrixConversion.PositionFromMatrix(m);
-        rotation = MatrixConversion.RotationFromMatrix(m);
-        scale = MatrixConversion.ScaleFromMatrix(m);
-    }
-
-    public Vector3 GetWorldToLocalTransform(Transform p_parent, Transform childTransform, out Vector3 position, out Quaternion rotation)
-    {
-        Matrix4x4 parentMatrix = Matrix4x4.TRS(p_parent.position, p_parent.rotation, p_parent.lossyScale);
-
-        Matrix4x4 m = MatrixConversion.GetLocalMatrix(parentMatrix, childTransform.position, childTransform.rotation, childTransform.lossyScale);
-
-        position = MatrixConversion.PositionFromMatrix(m);
-        rotation = MatrixConversion.RotationFromMatrix(m);
-        return MatrixConversion.ScaleFromMatrix(m);
-    }
-
-    
-
-    public void SyncTransform(Matrix4x4 parentMat)
-    {
-        Matrix4x4 m = MatrixConversion.GetWorldMatrix(parentMat, position, rotation, scale);
-
-        transform.position = MatrixConversion.PositionFromMatrix(m);
-        transform.rotation = MatrixConversion.RotationFromMatrix(m);
-        //transform.localScale = MatrixConversion.PositionFromMatrix(m);
-    }
-}
-
-public static class MatrixConversion
-{
-    public static Matrix4x4 GetProjectionMatrix(Camera cam)
-    {
-        return (!cam.orthographic? 
-            cam.projectionMatrix :
-            GL.GetGPUProjectionMatrix(cam.projectionMatrix,false))* cam.worldToCameraMatrix;
-    }
-
-    public static Matrix4x4 GetVP(Camera cam)
-    {
-        bool d3d = SystemInfo.graphicsDeviceVersion.IndexOf("Direct3D") > -1;
-        //Matrix4x4 M = _target.localToWorldMatrix;
-        Matrix4x4 V = cam.worldToCameraMatrix;
-        Matrix4x4 P = cam.projectionMatrix;
-        if (d3d) {
-            // Invert Y for rendering to a render texture
-            for (int i = 0; i < 4; i++) {
-                P[1,i] = -P[1,i];
-            }
-            // Scale and bias from OpenGL -> D3D depth range
-            for (int i = 0; i < 4; i++) {
-                P[2,i] = P[2,i]*0.5f + P[3,i]*0.5f;
-            }
-        }
-        //Matrix4x4 MVP = P*V*M;
-
-        //Matrix4x4 matrix_MVP = P * V * M;//_camera.worldToCameraMatrix;
-        return P * V;
-    }
-    
-    public static Vector3 PositionFromMatrix(Matrix4x4 m) { return m.GetColumn(3); }
-    public static void SetPositionFromMatrix(ref Matrix4x4 m, Vector3 pos) {
-        // m.SetColumn(3, new Vector4(pos.x,pos.y,pos.z, 0)); 
-        //m.m03 = pos.x;
-        //m.m13 = pos.y;
-        //m.m23 = pos.z;
-        m.SetTRS(pos, MatrixConversion.RotationFromMatrix(m), MatrixConversion.ScaleFromMatrix(m));
-    }
-
-    // Extract new local rotation
-    public static Quaternion RotationFromMatrix(Matrix4x4 m)
-    {
-        return Quaternion.LookRotation(
-            m.GetColumn(2),
-            m.GetColumn(1)
-            );
-    }
-
-    public static void SetRotationToMatrix(ref Matrix4x4 m, Quaternion rot)
-    {
-        m.SetColumn(2, rot * Vector3.forward);
-        m.SetColumn(1, rot * Vector3.up);
-
-        //return m;
-    }
-
-    // Extract new local scale
-    public static Vector3 ScaleFromMatrix(Matrix4x4 m)
-    {
-        return new Vector3(
-            m.GetColumn(0).magnitude,
-            m.GetColumn(1).magnitude,
-            m.GetColumn(2).magnitude);
-    }
-
-    public static Matrix4x4 GetLocalMatrix(Matrix4x4 parentMatrix, Vector3 worldPosition, Quaternion worldRotation, Vector3 lossyScale)
-    {
-        Matrix4x4 childMatrix = Matrix4x4.TRS(worldPosition, worldRotation, lossyScale);
-        return parentMatrix.inverse * childMatrix;
-    }
-
-    public static Matrix4x4 GetLocalMatrixAndConvert(Matrix4x4 parentMatrix, Matrix4x4 childMatrix)
-    {
-        return parentMatrix.inverse * childMatrix;
-    }
-
-    public static Matrix4x4 GetWorldMatrix(Matrix4x4 parentMatrix, Vector3 localPosition, Quaternion localRotation, Vector3 localScale)
-    {
-        Matrix4x4 childMatrix = Matrix4x4.TRS(localPosition, localRotation, localScale);
-        return parentMatrix * childMatrix;
-    }
-
-    public static Matrix4x4 GetWorldMatrixAndConvert(Matrix4x4 parentMatrix, Matrix4x4 childMatrix)
-    {
-        return parentMatrix * childMatrix;
-    }
-
-    public static Vector3 TransformVector(Matrix4x4 parentMatrix, Vector3 localVector)
-    {
-        return parentMatrix.MultiplyVector(localVector);
-    }
-
-    public static Vector3 InverseTransformVector(Matrix4x4 parentMatrix, Vector3 worldVector)
-    {
-        return parentMatrix.inverse.MultiplyVector(worldVector);
-    }
-    public static Vector3 TransformPoint(Matrix4x4 parentMatrix, Vector3 localPoint)
-    {
-        return parentMatrix.MultiplyPoint(localPoint);
-    }
-
-    public static Vector3 InverseTransformPoint(Matrix4x4 parentMatrix, Vector3 worldPoint)
-    {
-        return parentMatrix.inverse.MultiplyPoint(worldPoint);
     }
 }
