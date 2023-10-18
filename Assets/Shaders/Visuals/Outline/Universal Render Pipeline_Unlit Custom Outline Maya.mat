@@ -51,6 +51,6 @@ Material:
     - _Thickness: 0.001
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.26415092, g: 0.21306513, b: 0.21306513, a: 1}
+    - _BaseColor: {r: 0.2641509, g: 0.21306509, b: 0.21306509, a: 1}
     - _Color: {r: 0.21698105, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
