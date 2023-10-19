@@ -346,6 +346,7 @@ MonoBehaviour:
   size: {x: 0.033, y: 0.05, z: 0.3}
   direction: 0
   radiusSeparation: 0
+  alignedOnCenter: 1
 --- !u!4 &109416325 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6970720250980641669, guid: 5db0efbfc08ea4541b0abf3cc8d51605, type: 3}
@@ -414,6 +415,7 @@ MonoBehaviour:
   size: {x: 0.02, y: 0.05, z: 0.08}
   direction: 0
   radiusSeparation: 0
+  alignedOnCenter: 1
 --- !u!1 &198721462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9174377716324329115, guid: 5db0efbfc08ea4541b0abf3cc8d51605, type: 3}
@@ -932,6 +934,7 @@ MonoBehaviour:
   size: {x: 0.05, y: 0.05, z: 0.23}
   direction: 0
   radiusSeparation: 0
+  alignedOnCenter: 1
 --- !u!1 &451238707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2312,6 +2315,10 @@ MonoBehaviour:
     normalAlignmentSetting:
       alignmentMode: 0
       adjustmentTransform: {fileID: 0}
+    cullingSettings:
+      cameraCullingMode: 30
+      cameraCullingMethod: 0
+      cameraCullingRenderers: []
     normalAxis: 1
     gravity: 2
     gravityDirection:
@@ -2375,19 +2382,22 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     inertiaConstraint:
-      movementInertia: 1
-      rotationInertia: 1
-      depthInertia: 1
-      centrifualAcceleration: 0
+      worldInertia: 1
       movementSpeedLimit:
         value: 5
         use: 1
       rotationSpeedLimit:
         value: 720
         use: 1
+      localInertia: 1
+      depthInertia: 1
+      centrifualAcceleration: 0
       particleSpeedLimit:
         value: 4
         use: 1
+      teleportMode: 0
+      teleportDistance: 0.5
+      teleportRotation: 90
     tetherConstraint:
       distanceCompression: 0.4
     distanceConstraint:
@@ -2908,6 +2918,7 @@ MonoBehaviour:
   size: {x: 0.06, y: 0.05, z: 0.48}
   direction: 1
   radiusSeparation: 0
+  alignedOnCenter: 1
 --- !u!4 &1265189752 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1078094025267480865, guid: 5db0efbfc08ea4541b0abf3cc8d51605, type: 3}
@@ -3706,6 +3717,10 @@ MonoBehaviour:
     normalAlignmentSetting:
       alignmentMode: 0
       adjustmentTransform: {fileID: 0}
+    cullingSettings:
+      cameraCullingMode: 30
+      cameraCullingMethod: 0
+      cameraCullingRenderers: []
     normalAxis: 1
     gravity: 0
     gravityDirection:
@@ -3769,19 +3784,22 @@ MonoBehaviour:
         m_PostInfinity: 2
         m_RotationOrder: 4
     inertiaConstraint:
-      movementInertia: 1
-      rotationInertia: 1
-      depthInertia: 0
-      centrifualAcceleration: 0
+      worldInertia: 1
       movementSpeedLimit:
         value: 5
         use: 1
       rotationSpeedLimit:
         value: 720
         use: 1
+      localInertia: 1
+      depthInertia: 0
+      centrifualAcceleration: 0
       particleSpeedLimit:
         value: 4
         use: 1
+      teleportMode: 0
+      teleportDistance: 0.5
+      teleportRotation: 90
     tetherConstraint:
       distanceCompression: 0.4
     distanceConstraint:
@@ -5440,6 +5458,7 @@ MonoBehaviour:
   size: {x: 0.06, y: 0.05, z: 0.48}
   direction: 1
   radiusSeparation: 0
+  alignedOnCenter: 1
 --- !u!4 &2112589954 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2510089842229203771, guid: 5db0efbfc08ea4541b0abf3cc8d51605, type: 3}

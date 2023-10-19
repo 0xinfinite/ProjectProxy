@@ -16,8 +16,9 @@
 CBUFFER_START(UnityPerMaterial)
 float4 _BaseMap_ST;
 float4 _DetailAlbedoMap_ST;
-float4 _WarpTex_ST;
+float4 _WarpMap_ST;
 half4 _BaseColor;
+half _ShadowColorSlider;
 half4 _ShadowColor;
 half4 _SpecColor;
 half4 _EmissionColor;
@@ -53,6 +54,7 @@ UNITY_DOTS_INSTANCING_START(MaterialPropertyMetadata)
     UNITY_DOTS_INSTANCED_PROP(float, _AdditionalShadowCastOffset)
     UNITY_DOTS_INSTANCED_PROP(float , _Cutoff)
     UNITY_DOTS_INSTANCED_PROP(float,  _DepthForward)
+    UNITY_DOTS_INSTANCED_PROP(float, _ShadowColorSlider)
     UNITY_DOTS_INSTANCED_PROP(float , _BaseMultiplier)
     UNITY_DOTS_INSTANCED_PROP(float , _GIMultiplier)
     UNITY_DOTS_INSTANCED_PROP(float , _Smoothness)
@@ -68,7 +70,8 @@ UNITY_DOTS_INSTANCING_START(MaterialPropertyMetadata)
 UNITY_DOTS_INSTANCING_END(MaterialPropertyMetadata)
 
 #define _BaseColor              UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4 , _BaseColor)
-#define _ShadowColor              UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4 , _ShadowColor)
+#define _ShadowColorSlider      UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float  , _ShadowColorSlider)
+#define _ShadowColor            UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4 , _ShadowColor)
 #define _SpecColor              UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4 , _SpecColor)
 #define _EmissionColor          UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float4 , _EmissionColor)
 #define _ShadowCastOffset       UNITY_ACCESS_DOTS_INSTANCED_PROP_WITH_DEFAULT(float  , _ShadowCastOffset)
@@ -219,6 +222,45 @@ half3 ApplyDetailNormal(float2 detailUv, half3 normalTS, half detailMask)
 #endif
 }
 
+inline void InitializeStandardLitSurfaceData(float2 uv, out SurfaceData outSurfaceData)
+{
+    half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
+    outSurfaceData.alpha = Alpha(albedoAlpha.a, _BaseColor, _Cutoff);
+
+    half4 specGloss = SampleMetallicSpecGloss(uv, albedoAlpha.a);
+    outSurfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
+    outSurfaceData.albedo = AlphaModulate(outSurfaceData.albedo, outSurfaceData.alpha);
+
+#if _SPECULAR_SETUP
+    outSurfaceData.metallic = half(1.0);
+    outSurfaceData.specular = specGloss.rgb;
+#else
+    outSurfaceData.metallic = specGloss.r;
+    outSurfaceData.specular = half3(0.0, 0.0, 0.0);
+#endif
+
+    outSurfaceData.smoothness = specGloss.a;
+    outSurfaceData.normalTS = SampleNormal(uv, TEXTURE2D_ARGS(_BumpMap, sampler_BumpMap), _BumpScale);
+    outSurfaceData.occlusion = SampleOcclusion(uv);
+    outSurfaceData.emission = SampleEmission(uv, _EmissionColor.rgb, TEXTURE2D_ARGS(_EmissionMap, sampler_EmissionMap));
+
+#if defined(_CLEARCOAT) || defined(_CLEARCOATMAP)
+    half2 clearCoat = SampleClearCoat(uv);
+    outSurfaceData.clearCoatMask = clearCoat.r;
+    outSurfaceData.clearCoatSmoothness = clearCoat.g;
+#else
+    outSurfaceData.clearCoatMask = half(0.0);
+    outSurfaceData.clearCoatSmoothness = half(0.0);
+#endif
+
+#if defined(_DETAIL)
+    half detailMask = SAMPLE_TEXTURE2D(_DetailMask, sampler_DetailMask, uv).a;
+    float2 detailUv = uv * _DetailAlbedoMap_ST.xy + _DetailAlbedoMap_ST.zw;
+    outSurfaceData.albedo = ApplyDetailAlbedo(detailUv, outSurfaceData.albedo, detailMask);
+    outSurfaceData.normalTS = ApplyDetailNormal(detailUv, outSurfaceData.normalTS, detailMask);
+#endif
+}
+
 inline void InitializeStandardLitSurfaceData(float2 uv, out SurfaceData outSurfaceData, out AdditionalSurfaceData outAdditionalData)
 {
     half4 albedoAlpha = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_BaseMap, sampler_BaseMap));
@@ -227,11 +269,11 @@ inline void InitializeStandardLitSurfaceData(float2 uv, out SurfaceData outSurfa
     half4 specGloss = SampleMetallicSpecGloss(uv, albedoAlpha.a);
     outSurfaceData.albedo = albedoAlpha.rgb * _BaseColor.rgb;
     outSurfaceData.albedo = AlphaModulate(outSurfaceData.albedo, outSurfaceData.alpha);
-//#if defined (_SHADOWMAP)
-    outAdditionalData.shadowed = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_ShadowMap, sampler_BaseMap)).rgb;
-//#else
-//    outAdditionalData.shadowed = outSurfaceData.albedo;
-//#endif
+#if defined (_SHADOWCOLORMAP)
+    outAdditionalData.shadowed = SampleAlbedoAlpha(uv, TEXTURE2D_ARGS(_ShadowColorMap, sampler_BaseMap)).rgb;
+#else
+    outAdditionalData.shadowed = outSurfaceData.albedo;
+#endif
 
 #if _SPECULAR_SETUP
     outSurfaceData.metallic = half(1.0);

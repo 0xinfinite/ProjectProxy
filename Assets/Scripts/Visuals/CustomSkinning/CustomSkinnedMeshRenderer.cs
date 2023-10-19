@@ -5,6 +5,9 @@ using Unity.Burst;
 using Unity.Mathematics;
 using Unity.Transforms;
 using UnityEngine.Jobs;
+using Unity.Entities;
+using Unity.Rendering;
+using UnityEngine.Rendering;
 
 [BurstCompile]
 struct BoneMatriceJob : IJobParallelForTransform
@@ -116,14 +119,43 @@ struct MeshDeformJob : IJobParallelFor
     }
 }
 
-[RequireComponent(typeof(MeshRenderer), typeof(MeshFilter), typeof(SkinnedMeshRenderer))]
+//[GenerateTestsForBurstCompatibility]
+//public struct SpawnJob : IJobParallelFor
+//{
+//    public Entity Prototype;
+//    public int EntityCount;
+//    public EntityCommandBuffer.ParallelWriter Ecb;
+
+//    public void Execute(int index)
+//    {
+//        // Clone the Prototype entity to create a new entity.
+//        var e = Ecb.Instantiate(index, Prototype);
+//        // Prototype has all correct components up front, can use SetComponent to
+//        // set values unique to the newly created entity, such as the transform.
+//        Ecb.SetComponent(index, e, new LocalToWorld { Value = ComputeTransform(index) });
+//    }
+
+//    public float4x4 ComputeTransform(int index)
+//    {
+//        return float4x4.Translate(new float3(index, 0, 0));
+//    }
+//}
+
+[RequireComponent(typeof(MeshRenderer), typeof(MeshFilter)/*, typeof(SkinnedMeshRenderer)*/)]
 //[CanEditMultipleObjects]
 public class CustomSkinnedMeshRenderer : MonoBehaviour
 {
-    [SerializeField] bool multiThread = true;
+    public enum ThreadType { SingleThread = 0, Job, JobAndEntity}   
+
+    [Tooltip("JobAndEntity is not working currently!")][SerializeField] ThreadType threadType;
 
     public Mesh mesh;
-    public Material[] sharedMaterials;
+    [SerializeField]
+    private Material[] sharedMaterials;
+    [SerializeField]
+    private Material[] sharedManualMaterials;
+    [SerializeField]
+    private bool renderManually;
     public Transform rootBone;
     public Transform[] bones;
     public BoneWeight[] weights;
@@ -132,11 +164,15 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
     public float[] blendshapeWeights;
     public bool syncShapeValueWithSkinned = true;
 
+    private bool shaderDesignated;
+    private Shader prevShader;
+
     private MeshFilter meshFilter;
     private Mesh deformedMesh;
     private Matrix4x4[] bindposes;
     private Vector3[] tangents3;
 
+    [SerializeField]
     private SkinnedMeshRenderer origSkinned;
      NativeArray<float4x4> bonesForJob;
     TransformAccessArray bonesAccess;
@@ -151,13 +187,30 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
     NativeArray<byte> bonesPerVertex;
     NativeArray<BoneWeight1> boneWeights;
 
+    GraphicsBuffer meshTriangles;
+    GraphicsBuffer meshPositions;
+    GraphicsBuffer meshNormals;
+    GraphicsBuffer meshUVs;
+    GraphicsBuffer meshTangents;
+    GraphicsBuffer meshColors;
+    //GraphicsBuffer meshIndices;
+
+    GraphicsBuffer commandBuffer;
+    GraphicsBuffer.IndirectDrawArgs[] commandData;
+
+    private Entity entity;
+    private EntityManager entityManager;
+    private RenderMeshArray renderMeshArray;
+
+    const int commandCount = 2;
+
     void Awake()
     {
         if (this.enabled)
         {
             meshFilter = GetComponent<MeshFilter>();
 
-            if (TryGetComponent<SkinnedMeshRenderer>(out origSkinned))
+            if (origSkinned != null || TryGetComponent<SkinnedMeshRenderer>(out origSkinned))
             {
                 mesh = origSkinned.sharedMesh;
                 bones = origSkinned.bones;
@@ -166,7 +219,7 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
                 rootBone = origSkinned.rootBone;
                 bindposes = mesh.bindposes;
 
-                sharedMaterials = origSkinned.sharedMaterials;
+                // sharedMaterials = origSkinned.sharedMaterials;
 
                 origSkinned.enabled = false;
 
@@ -181,14 +234,18 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
 
             if (TryGetComponent<MeshRenderer>(out MeshRenderer renderer))
             {
-                renderer.sharedMaterials = origSkinned.sharedMaterials;
-                renderer.enabled = true;    // !multiThread ? true:false;
+                renderer.sharedMaterials = /*origSkinned.*/sharedMaterials;
+                //if(designatedShader != null)
+                renderer.enabled = threadType == ThreadType.JobAndEntity ? false : true;//!multiThread ? true:false;
+                //else
+                //    renderer.enabled = true;
             }
+
 
             bonesPerVertex = mesh.GetBonesPerVertex();
             boneWeights = mesh.GetAllBoneWeights();
 
-            if (multiThread)
+            if (threadType != ThreadType.SingleThread)
             {
                 bonesForJob = new NativeArray<float4x4>(bones.Length, Allocator.Persistent);
                 bonesAccess = new TransformAccessArray(bones);
@@ -212,10 +269,105 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
         }
     }
 
+    bool renderedManually;
+
+    void Start()
+    {
+        //{
+        //    { 
+                //shaderDesignated = designatedShader == null ? false : true;
+
+                //if (renderManually)
+                //{
+                //    renderedManually = true;
+                //    //for (int i = 0; i < sharedMaterials.Length; ++i)
+                //    //{
+                //    //    prevShader = sharedMaterials[i].shader;
+                //    //    sharedMaterials[i].shader = designatedShader;
+                //    //}
+
+                //    //meshTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.triangles.Length, sizeof(int));
+                //    //meshTriangles.SetData(deformedMesh.triangles);
+                //    meshPositions = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.vertices.Length, 3 * sizeof(float));
+                //    meshPositions.SetData(deformedMesh.vertices);
+                //    meshNormals = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.normals.Length, 3 * sizeof(float));
+                //    meshNormals.SetData(deformedMesh.normals);
+                //    meshUVs = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.uv.Length, 2 * sizeof(float));
+                //    meshUVs.SetData(deformedMesh.uv);
+                //    meshTangents = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.tangents.Length, 4 * sizeof(float));
+                //    meshTangents.SetData(deformedMesh.tangents);
+                //    meshColors = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.colors.Length, 3 * sizeof(float));
+                //    meshColors.SetData(ColorsToVector3(deformedMesh.colors));
+                //    //meshIndices = new GraphicsBuffer(GraphicsBuffer.Target.Structured, deformedMesh.GetIn.Length, 3*sizeof(int));
+                //    commandBuffer = new GraphicsBuffer(GraphicsBuffer.Target.IndirectArguments, commandCount, GraphicsBuffer.IndirectDrawArgs.size);
+                //    commandData = new GraphicsBuffer.IndirectDrawArgs[commandCount];
+                //}
+        //    }
+        //}
+        if(threadType == ThreadType.JobAndEntity)
+        {
+            var world = World.DefaultGameObjectInjectionWorld;
+            entityManager = world.EntityManager;
+
+            EntityCommandBuffer ecb = new EntityCommandBuffer(Allocator.TempJob);
+
+            // Create a RenderMeshDescription using the convenience constructor
+            // with named parameters.
+            var desc = new RenderMeshDescription(
+                shadowCastingMode: ShadowCastingMode.On,
+                receiveShadows: true);
+
+            // Create an array of mesh and material required for runtime rendering.
+            renderMeshArray = new RenderMeshArray(sharedMaterials, new Mesh[] { deformedMesh });
+            
+            // Create empty base entity
+            entity = entityManager.CreateEntity();
+
+            // Call AddComponents to populate base entity with the components required
+            // by Entities Graphics
+            RenderMeshUtility.AddComponents(
+                entity,
+                entityManager,
+                desc,
+                renderMeshArray,
+                MaterialMeshInfo.FromRenderMeshArrayIndices(0, 0));
+            entityManager.AddComponentData(entity, new LocalToWorld());
+
+            // Spawn most of the entities in a Burst job by cloning a pre-created prototype entity,
+            // which can be either a Prefab or an entity created at run time like in this sample.
+            // This is the fastest and most efficient way to create entities at run time.
+            //var spawnJob = new SpawnJob
+            //{
+            //    Prototype = prototype,
+            //    Ecb = ecb.AsParallelWriter(),
+            //    EntityCount = 1,
+            //};
+
+            //var spawnHandle = spawnJob.Schedule(1, 1);
+            //spawnHandle.Complete();
+
+            //ecb.Playback(entityManager);
+            //ecb.Dispose();
+            //entityManager.DestroyEntity(prototype);
+        }
+    }
+
+    private void OnValidate()
+    {
+            if (TryGetComponent<MeshRenderer>(out MeshRenderer renderer))
+                renderer.enabled = renderManually ? false : true;
+
+        if (renderManually)
+        {
+            Start();
+        }
+     
+    }
+
 
     private void OnDestroy()
     {
-        if (multiThread)
+        if (threadType != ThreadType.SingleThread)
         {
             bonesForJob.Dispose();
             bindPosesForJob.Dispose();
@@ -226,6 +378,27 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
             boneWeightIndexStartArray.Dispose();
             deltaVerticesForJob.Dispose();
             deltaNormalsForJob.Dispose();
+
+            if (renderedManually)
+            {
+                //for (int i = 0; i < sharedMaterials.Length; ++i)
+                //    sharedMaterials[i].shader = prevShader;
+
+                meshTriangles?.Dispose();
+                meshTriangles = null;
+                meshPositions?.Dispose();
+                meshPositions = null;
+                meshNormals?.Dispose();
+                meshNormals = null;
+                meshUVs?.Dispose();
+                meshUVs = null;
+                meshTangents?.Dispose();
+                meshTangents = null;
+                meshColors?.Dispose();
+                meshColors = null;
+                commandBuffer?.Dispose();
+                commandBuffer = null;
+            }
         }
     }
 
@@ -248,6 +421,18 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
         }
 
         return targetMesh;
+    }
+
+    public Vector3[] ColorsToVector3(Color[] colors)
+    {
+        Vector3[] result = new Vector3[colors.Length];
+
+        for (int i = 0; i < result.Length; i++)
+        {
+            result[i] = new Vector3(colors[i].r, colors[i].g, colors[i].b);
+        }
+
+        return result;
     }
 
     public NativeArray<float3> Vector3ToFloat3(Vector3[] arr, Allocator allocator = Allocator.TempJob)
@@ -420,14 +605,28 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
         return blendshapeWeights;
     }
 
-    void LateUpdate()
+    public Vector3 MeasureBoundsCenter(NativeArray<float3> positions)
+    {
+        float3 center = float3.zero;
+
+        int add =(int)( positions.Length / 6);
+
+        for (int i = 0; i < positions.Length; i+=add )
+        {
+            center += positions[i];
+        }
+
+        return center/6;
+    }
+
+    void Update()
     {
 
                 if (mesh == null || bones == null || weights == null)
             return;
 
         
-        if (!multiThread)
+        if (threadType == ThreadType.SingleThread)
         {
             Vector3[] vertices = mesh.vertices;
             Vector3[] deltaVertices = new Vector3[vertices.Length];
@@ -577,11 +776,94 @@ public class CustomSkinnedMeshRenderer : MonoBehaviour
 
             handle.Complete();
 
-
-            deformedMesh.vertices = Float3ToVector3(verticesForJob);
-            deformedMesh.normals = Float3ToVector3(normalsForJob);
-
+            switch(threadType)
+            {
+                case ThreadType.Job:
+                case ThreadType.JobAndEntity:
+                    deformedMesh.vertices = Float3ToVector3(verticesForJob);
+                deformedMesh.normals = Float3ToVector3(normalsForJob);
                 deformedMesh.RecalculateBounds();
+            break;
+               
+                    
+                    
+                    
+                ////if(renderManually)
+                ////deformedMesh.vertices = Float3ToVector3(verticesForJob);
+                ////deformedMesh.normals = Float3ToVector3(normalsForJob);
+                ////deformedMesh.RecalculateBounds();
+
+                ////ComputeBuffer argsBuffer;
+                ////ComputeBuffer matricesBuffer;
+
+                ////argsBuffer = new ComputeBuffer(1, 5 * sizeof(uint), ComputeBufferType.IndirectArguments);
+
+                ////for (int i = 0; i < deformedMesh.subMeshCount; ++i)
+                ////{
+                ////    argsBuffer.SetData(new uint[]{
+                ////    (uint)deformedMesh.GetIndexCount(i),
+                ////    (uint)1,
+                ////    (uint)deformedMesh.GetIndexStart(i),
+                ////    (uint)deformedMesh.GetBaseVertex(i)
+                ////});
+                ////    var bounds = new Bounds(MeasureBoundsCenter(verticesForJob), Vector3.one * 10f);
+
+                ////    Matrix4x4[] matrices = new Matrix4x4[1] { transform.localToWorldMatrix };
+                ////    matricesBuffer = new ComputeBuffer(1, sizeof(float) * 4 * 4);
+                ////    matricesBuffer.SetData(matrices);
+                ////    sharedMaterials[i].SetBuffer("matricesBuffer", matricesBuffer);
+
+                ////    //Graphics.DrawMeshIns
+                ////}
+
+                ////for (int i = 0; i < deformedMesh.subMeshCount; ++i)
+                ////{
+                ////    RenderParams rp = new RenderParams(sharedMaterials[i]);
+                ////    Graphics.RenderMesh(rp, deformedMesh, i, transform.localToWorldMatrix);
+                ////}
+                //meshPositions.SetData(verticesForJob);
+                //meshNormals.SetData(normalsForJob);
+
+                //////Debug.Log("deformedMesh.subMeshCount : " + deformedMesh.subMeshCount+ " / sharedMaterials[i] : "+ sharedMaterials.Length);
+                ////var indexBuffer = deformedMesh.GetIndexBuffer();
+                //for (int i = 0; i < deformedMesh.subMeshCount && i < sharedManualMaterials.Length; ++i)
+                //{
+                //    RenderParams rp = new RenderParams(sharedManualMaterials[i]);
+                //    //var submesh = deformedMesh.GetSubMesh(i);
+                //    int indexCount = (int)deformedMesh.GetIndexCount(i);
+                //    meshTriangles = new GraphicsBuffer(GraphicsBuffer.Target.Structured, indexCount, sizeof(int));
+                //    meshTriangles.SetData(deformedMesh.GetTriangles(i));
+
+
+                //    rp.worldBounds = new Bounds(MeasureBoundsCenter(verticesForJob), Vector3.one * 100f); //deformedMesh.bounds;
+                //    rp.matProps = new MaterialPropertyBlock();
+                //    rp.matProps.SetBuffer("_Triangles", meshTriangles);
+                //    rp.matProps.SetBuffer("_Positions", meshPositions);
+                //    rp.matProps.SetBuffer("_Normals", meshNormals);
+                //    rp.matProps.SetBuffer("_UVs", meshUVs);
+                //    rp.matProps.SetBuffer("_Tangents", meshTangents);
+                //    rp.matProps.SetBuffer("_Colors", meshColors);
+                //    //rp.matProps.SetInt("_StartIndex", (int)deformedMesh.GetIndexStart(i));
+                //    rp.matProps.SetInt("_BaseVertexIndex", (int)deformedMesh.GetBaseVertex(i));
+
+
+                //    //Graphics.RenderPrimitivesIndirect(rp, MeshTopology.Triangles, )
+                //    //Debug.Log("submesh.indexStart : " + (int)deformedMesh.GetIndexStart(i) + " / submesh.baseVertex: " + (int)deformedMesh.GetBaseVertex(i));
+                //    rp.matProps.SetMatrix("_ObjectToWorld", transform.localToWorldMatrix);
+
+
+                //    commandData[0].vertexCountPerInstance = deformedMesh.GetIndexStart(i);
+                //    commandData[0].instanceCount = 1;
+                //    commandData[1].vertexCountPerInstance = deformedMesh.GetIndexStart(i);
+                //    commandData[1].instanceCount = 1;
+                //    commandBuffer.SetData(commandData);
+                //    Graphics.RenderPrimitivesIndirect(rp, MeshTopology.Triangles, commandBuffer, commandCount);
+                //        //Graphics.RenderMesh(rp, deformedMesh, i, transform.localToWorldMatrix);//
+                //        //Graphics.RenderPrimitivesIndexed(rp, MeshTopology.Triangles, meshTriangles, indexCount, (int)deformedMesh.GetIndexStart(i));//RenderPrimitives(rp, MeshTopology.Triangles, submesh.vertexCount);
+                        
+                        break; 
+            }
+            
 
         }
 

@@ -42,12 +42,13 @@ half4 LightingStylizedBased(BRDFData brdfData, BRDFData brdfDataClearCoat,
     half clearCoatMask, bool specularHighlightsOff)
 {
     half NdotL = saturate(dot(normalWS, lightDirectionWS));
-
-    NdotL = saturate(SampleAlbedoAlpha(float2(NdotL, 0.5)* _WarpTex_ST.xy + _WarpTex_ST.zw, _WarpTex, sampler_WarpTex).r);
+#if defined(_WARPMAP)
+    NdotL = saturate(SampleAlbedoAlpha(float2(NdotL, 0.5)* _WarpMap_ST.xy + _WarpMap_ST.zw, _WarpMap, sampler_WarpMap).r);
+#endif
     half attenuation = lightAttenuation * NdotL;
     half3 radiance = lightColor; //* attenuation;
 
-    half3 brdf = attenuation;//brdfData.diffuse;
+    half3 brdf = attenuation;// attenuation;//brdfData.diffuse;
 #ifndef _SPECULARHIGHLIGHTS_OFF
     [branch] if (!specularHighlightsOff)
     {
@@ -141,59 +142,57 @@ struct LightingData
     half3 vertexLightingColor;
     half3 emissionColor;
     half  lightAttenuation;
-    half  baseMultiplier;
+    half  shadowColorSlider;
     half  giMultiplier;
 };
 
-half4 CalculateIndivisualLightingColor(half4 lightColor, half baseMultiplier, half giMultiplier, half3 albedo, half3 baseShadowColor, half3 shadowedColor)
+half4 CalculateIndivisualLightingColor(half4 lightColor, half shadowColorSlider, half giMultiplier, half3 albedo, half3 shadowTint, half3 shadowedColor)
 {
-    return /*lerp( lerp( lerp (pow(albedo, baseMultiplier), baseShadowColor, (albedo.r+ albedo.g+ albedo.b)* 0.33333), 0, giMultiplier),
+    return /*lerp( lerp( lerp (pow(albedo, shadowColorSlider), shadowTint, (albedo.r+ albedo.g+ albedo.b)* 0.33333), 0, giMultiplier),
         lightColor.rgb,
         lightColor.a);*/
-        //half4(  lerp( baseShadowColor * lightColor.rgb* baseMultiplier, lightColor.rgb, lightColor.a), lightColor.a);
+        //half4(  lerp( shadowTint * lightColor.rgb* shadowColorSlider, lightColor.rgb, lightColor.a), lightColor.a);
         half4(lerp(0, lightColor.rgb, lightColor.a), lightColor.a);
 }
 
-half4 CalculateLightingColor(LightingData lightingData, half3 albedo, half3 baseShadowColor, half shadowedColor)
+half CalculateLightStrengthFromColor(half3 color) {
+    return (color.r + color.g + color.b) * 0.3334;
+}
+
+half4 CalculateLightingColor(LightingData lightingData, half3 albedo/*, half3 shadowTint, half shadowedColor*/)
 {
     half4 lightingColor = 0;
 
     if (IsOnlyAOLightingFeatureEnabled())
     {
-        return half4( lightingData.giColor,0); // Contains white + AO
+        return half4(lightingData.giColor,0); // Contains white + AO
     }
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_GLOBAL_ILLUMINATION))
     {
-        lightingColor += half4( lerp( lerp(shadowedColor*baseShadowColor, 0, (lightingData.mainLightColor.r+ lightingData.mainLightColor.g+ lightingData.mainLightColor.b)*0.3333), lightingData.giColor, lightingData.giMultiplier) ,0);
+        lightingColor += half4( lightingData.giColor, CalculateLightStrengthFromColor(lightingData.giColor))* lightingData.giMultiplier;
     }
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_MAIN_LIGHT))
     {
-        lightingColor += //lightingData.mainLightColor.rgb;
-            CalculateIndivisualLightingColor(lightingData.mainLightColor, lightingData.baseMultiplier, lightingData.giMultiplier, albedo, baseShadowColor, shadowedColor);
+        lightingColor += lightingData.mainLightColor;
     }
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_ADDITIONAL_LIGHTS))
     {
-        lightingColor += lightingData.additionalLightsColor;// .rgb;
-            //CalculateIndivisualLightingColor(lightingData.additionalLightsColor, lightingData.baseMultiplier, lightingData.giMultiplier, albedo, baseShadowColor, shadowedColor);
+        lightingColor += lightingData.additionalLightsColor;
     }
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_VERTEX_LIGHTING))
     {
-        lightingColor += half4(lightingData.vertexLightingColor,0);
-            //CalculateIndivisualLightingColor(lightingData.additionalLightsColor, lightingData.baseMultiplier, lightingData.giMultiplier, albedo, baseShadowColor, shadowedColor);
+        lightingColor += half4(lightingData.vertexLightingColor, CalculateLightStrengthFromColor(lightingData.vertexLightingColor));
     }
 
-    //lightingColor *= half4( lerp( albedo, shadowedColor, lightingColor.a),1);
-    //lightingColor 
-
-    //lightingColor *= lerp(shadowedColor, a)
+    //lightingColor *= albedo;
 
     if (IsLightingFeatureEnabled(DEBUGLIGHTINGFEATUREFLAGS_EMISSION))
     {
-        lightingColor.rgb += lightingData.emissionColor;
+        lightingColor += half4(lightingData.emissionColor, CalculateLightStrengthFromColor(lightingData.emissionColor));
     }
 
     return lightingColor;
@@ -201,13 +200,20 @@ half4 CalculateLightingColor(LightingData lightingData, half3 albedo, half3 base
 
 half4 CalculateFinalColor(LightingData lightingData, half alpha, half3 shadowed)
 {
-    half4 lightColor = CalculateLightingColor(lightingData, 1, 0, shadowed);
-    half3 finalColor = lerp(shadowed, lightColor.rgb, lightColor.a);
+    half3 finalColor = CalculateLightingColor(lightingData, 1);
 
     return half4(finalColor, alpha);
+    //half4 lightColor = CalculateLightingColor(lightingData, 1, 0, shadowed);
+    //half3 finalColor = lerp(shadowed, lightColor.rgb, lightColor.a);
+
+    //return half4(finalColor, alpha);
 }
 
-half4 CalculateFinalColor(LightingData lightingData, half3 albedo, half3 baseShadowColor, half alpha, float fogCoord, half3 shadowed)
+half3 CalculateShadowSideColor(LightingData lightingData, half3 shadowed, half3 shadowTint) {
+    return lerp(shadowed * shadowTint, lightingData.giColor, lightingData.giMultiplier);
+}
+
+half4 CalculateFinalColor(LightingData lightingData, half3 albedo, half3 shadowTint, half alpha, float fogCoord, half3 shadowed)
 {
     #if defined(_FOG_FRAGMENT)
         #if (defined(FOG_LINEAR) || defined(FOG_EXP) || defined(FOG_EXP2))
@@ -220,8 +226,18 @@ half4 CalculateFinalColor(LightingData lightingData, half3 albedo, half3 baseSha
     #else
     half fogFactor = fogCoord;
     #endif
-    half4 lightingColor = CalculateLightingColor(lightingData, albedo, baseShadowColor, shadowed);
-    half3 finalColor = MixFog(lerp(shadowed * baseShadowColor, albedo*lightingColor.rgb, /*((lightingColor.r + lightingColor.g + lightingColor.b) * 0.3333) * */ lightingColor.a), fogFactor);
+    half4 lightingColor = CalculateLightingColor(lightingData, albedo/*, shadowTint, shadowed*/);
+    half3 shadowSideColor = CalculateShadowSideColor(lightingData, shadowed, shadowTint);
+    //lightingColor.rgb *= lightingColor.a;
+    //half3 finalColor = MixFog(lerp(
+    //    /* shadowTint * saturate( lerp(lightingColor.rgb,1, /*CalculateLightStrengthFromColor(lightingColor.rgb)lightingColor.a))*/
+    //    , albedo * lightingColor.rgb, /*((lightingColor.r + lightingColor.g + lightingColor.b) * 0.3333) * */ lightingColor.a), fogFactor);
+    half3 finalColor = half3(
+        lerp(shadowSideColor.r, lightingColor.r * albedo.r + saturate(lerp(shadowSideColor.r, 0, lightingColor.r * lightingColor.a)), lightingColor.r * lightingColor.a),
+        lerp(shadowSideColor.g, lightingColor.g * albedo.g + saturate(lerp(shadowSideColor.g,0, lightingColor.g * lightingColor.a)), lightingColor.g * lightingColor.a),
+        lerp(shadowSideColor.b, lightingColor.b * albedo.b + saturate(lerp(shadowSideColor.b, 0, lightingColor.b * lightingColor.a)), lightingColor.b * lightingColor.a));
+    
+    finalColor = MixFog(finalColor, fogFactor);
 
     return half4(finalColor* alpha, alpha);
 }
@@ -236,7 +252,7 @@ LightingData CreateLightingData(InputData inputData, SurfaceData  surfaceData)
     lightingData.mainLightColor = 0;
     lightingData.additionalLightsColor = 0;
     lightingData.lightAttenuation = 1;
-    lightingData.baseMultiplier = 1;
+    lightingData.shadowColorSlider = 1;
     lightingData.giMultiplier = 1;
 
     return lightingData;
@@ -273,7 +289,7 @@ half4 UniversalFragmentPBR(InputData inputData, SurfaceData surfaceData, half3 s
 {
     float shadowcastOffset = offsets.x;
     float additionalShadowcastOffset = offsets.y;
-    float baseMultiplier = offsets.z;
+    float shadowColorSlider = offsets.z;
     float giMultiplier = offsets.w;
 
     #if defined(_SPECULARHIGHLIGHTS_OFF)
@@ -306,7 +322,7 @@ half4 UniversalFragmentPBR(InputData inputData, SurfaceData surfaceData, half3 s
     MixRealtimeAndBakedGI(mainLight, inputData.normalWS, inputData.bakedGI);
 
     LightingData lightingData = CreateLightingData(inputData, surfaceData);
-    lightingData.baseMultiplier = baseMultiplier;
+    lightingData.shadowColorSlider = shadowColorSlider;
     lightingData.giMultiplier = giMultiplier;
 
     lightingData.giColor = GlobalIllumination(brdfData, brdfDataClearCoat, surfaceData.clearCoatMask,
@@ -400,7 +416,7 @@ half4 UniversalFragmentBlinnPhong(InputData inputData, SurfaceData  surfaceData,
 {
     float shadowcastOffset = offsets.x;
     float additionalShadowcastOffset = offsets.y;
-    float baseMultiplier = offsets.z;
+    float shadowColorSlider = offsets.z;
     float giMultiplier = offsets.w;
 
     #if defined(DEBUG_DISPLAY)

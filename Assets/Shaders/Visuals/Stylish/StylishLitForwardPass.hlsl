@@ -254,7 +254,7 @@ void LitPassFragment(
 #endif
     //outColor = half4(surfaceData.albedo,1);
 
-    float4 offsets = float4(_ShadowCastOffset, _AdditionalShadowCastOffset, _BaseMultiplier, _GIMultiplier);
+    float4 offsets = float4(_ShadowCastOffset, _AdditionalShadowCastOffset, _ShadowColorSlider, _GIMultiplier);
     half4 color = UniversalFragmentPBR(inputData, surfaceData, additionalData.shadowed, offsets);
     color.rgb = MixFog(color.rgb, inputData.fogCoord);
     color.a = OutputAlpha(color.a, IsSurfaceTypeTransparent(_Surface));

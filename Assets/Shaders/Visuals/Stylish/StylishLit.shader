@@ -12,11 +12,12 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             _DepthForward("Depth Forward Distance", Float) = 0.0
 
-            _ShadowMap("Shadow Map", 2D) = "white" {}
+            _ShadowColorSlider("Shadow Color Slider", Range(0.0,1.0)) = 1.0
+            _ShadowColorMap("Shadow Color Map", 2D) = "white" {}
         _ShadowColor("Shadow Tint", Color) = (1,1,1,1)
         _ShadowCastOffset("Shadow Cast offset", Float) = 0.0
         _AdditionalShadowCastOffset("Additional Shadow Cast offset", Float) = 0.0
-        _WarpTex("Warp Texture For Shading", 2D) = "white" {}
+        _WarpMap("Warp Map For Shading", 2D) = "white" {}
         _BaseMultiplier("Base Map Multiplier", Float) = 1.0
         _GIMultiplier("Global Illumination Multiplier", Range(0.0, 1.0)) = 1.0
         
@@ -127,7 +128,9 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             // -------------------------------------
             // Material Keywords
-            #pragma shader_feature_local _SHADOWMAP
+            #pragma shader_feature_local _SHADOWCOLOR
+            #pragma shader_feature_local _SHADOWCOLORMAP
+            #pragma shader_feature_local _WARPMAP
             #pragma shader_feature_local _NORMALMAP
             #pragma shader_feature_local _PARALLAXMAP
             #pragma shader_feature_local _RECEIVE_SHADOWS_OFF
@@ -231,7 +234,7 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             // -------------------------------------
             // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #include "StylishLitInput.hlsl"     //#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/ShadowCasterPass.hlsl"
             ENDHLSL
         }
@@ -354,7 +357,7 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             // -------------------------------------
             // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #include "StylishLitInput.hlsl"    //#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/DepthOnlyPass.hlsl"
             ENDHLSL
         }
@@ -404,7 +407,7 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             // -------------------------------------
             // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #include "StylishLitInput.hlsl"     //#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitDepthNormalsPass.hlsl"
             ENDHLSL
         }
@@ -443,7 +446,7 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             // -------------------------------------
             // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #include "StylishLitInput.hlsl"    //#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/LitMetaPass.hlsl"
 
             ENDHLSL
@@ -480,12 +483,12 @@ Shader "Universal Render Pipeline/Stylish Lit"
 
             // -------------------------------------
             // Includes
-            #include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
+            #include "StylishLitInput.hlsl"//#include "Packages/com.unity.render-pipelines.universal/Shaders/LitInput.hlsl"
             #include "Packages/com.unity.render-pipelines.universal/Shaders/Utils/Universal2D.hlsl"
             ENDHLSL
         }
     }
 
     FallBack "Hidden/Universal Render Pipeline/FallbackError"
-    //CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.LitShader"
+    CustomEditor "UnityEditor.Rendering.Universal.ShaderGUI.StylishLitShader"
 }

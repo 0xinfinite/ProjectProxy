@@ -8,7 +8,7 @@
 			}
 
 			float4 ProjectUV(float4x4 projection, float4 inputVertex) {
-				float4 projVertex = mul(projection, mul(unity_ObjectToWorld, inputVertex));
+				float4 projVertex = mul(projection, TransformObjectToWorld(inputVertex)/*mul(unity_ObjectToWorld, inputVertex)*/);
 
 				return ComputeScreenPos(projVertex);
 			}
@@ -19,7 +19,7 @@
 			}
 
 			float4 ProjectUVLocal(float4x4 worldToHClipMatrix, float4 inputVertex) {
-				float4 projVertex = mul(worldToHClipMatrix, mul(unity_ObjectToWorld, inputVertex));
+				float4 projVertex = mul(worldToHClipMatrix, TransformObjectToWorld(inputVertex)/*mul(unity_ObjectToWorld, inputVertex)*/);
 
 				#if UNITY_REVERSED_Z
 				projVertex.z = 1-projVertex.z;

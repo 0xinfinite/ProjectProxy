@@ -24,7 +24,8 @@ Material:
   m_Shader: {fileID: 4800000, guid: 4bb2a21cfac54d847bddfb8677378d23, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
+  m_ValidKeywords:
+  - _WARPMAP
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -77,10 +78,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _ShadowColorMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _WarpMap:
+        m_Texture: {fileID: 2800000, guid: e2dbf64bf89bea04b9dabf703f10c06a, type: 3}
+        m_Scale: {x: 0.5, y: 1}
+        m_Offset: {x: 0.06, y: 0}
     - _WarpTex:
         m_Texture: {fileID: 2800000, guid: 9917d70189214c84d95fb17b7fd55a95, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -106,7 +115,7 @@ Material:
     - _AdditionalShadowCastOffset: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _BaseMultiplier: 4
+    - _BaseMultiplier: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -114,6 +123,7 @@ Material:
     - _ClearCoatSmoothness: 0
     - _Cull: 2
     - _Cutoff: 0.5
+    - _DepthForward: 0
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
@@ -141,5 +151,6 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _ShadowColor: {r: 1, g: 0.5398145, b: 0.28773582, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
